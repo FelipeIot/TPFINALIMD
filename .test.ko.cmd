@@ -1,0 +1,1 @@
+cmd_/home/felipe/Videos/borrar/tekken/test.ko := aarch64-buildroot-linux-gnu-ld -r -EL  -maarch64elf -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T scripts/module.lds -o /home/felipe/Videos/borrar/tekken/test.ko /home/felipe/Videos/borrar/tekken/test.o /home/felipe/Videos/borrar/tekken/test.mod.o;  true

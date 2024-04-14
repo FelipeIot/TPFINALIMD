@@ -1,0 +1,1 @@
+cmd_/home/felipe/Videos/borrar/tekken/Module.symvers :=  sed 's/ko$$/o/'  /home/felipe/Videos/borrar/tekken/modules.order | scripts/mod/modpost -m -a    -o /home/felipe/Videos/borrar/tekken/Module.symvers -e -i Module.symvers -T - 

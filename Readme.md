@@ -36,3 +36,21 @@ Además del procedimiento estándar mostrado en clases, se ha inicializado la pa
 </video>
 
 
+### Envío de Datos desde Espacio de Usuario
+
+Mediante el programa `shutdown` se envió la trama de apagado como se muestra en la siguiente imagen:
+
+![Envío de Datos desde Espacio de Usuario](./picture/usershut.png)
+
+El comando para apagar es el 174. Se observa en la imagen que el driver se abre en `/dev/ssd1306`, llega el comando deseado "174". Este dato se envía a través del puerto I2C a la pantalla, y luego se cierra `/dev/ssd1306`.
+
+### Remoción de Dispositivo
+
+Mediante la siguiente instrucción se remueve el driver:
+```
+rmmod driver.ko
+```
+
+![Remoción de Dispositivo](./picture/remove.png)
+
+Aquí se remueve el dispositivo y la clase, y se envían los comandos I2C para apagar la pantalla.

@@ -1,14 +1,14 @@
-/***************************************************************************/ 
+/***************************************************************************/
 /**
-*  \file       test.c
-*
-*  \details    SSD_1306 OLED Display I2C driver
-*
-*  \author     Felipe Sarche
-*
-*
-*
-* *******************************************************************************/
+ *  \file       test.c
+ *
+ *  \details    SSD_1306 OLED Display I2C driver
+ *
+ *  \author     Felipe Sarche
+ *
+ *
+ *
+ * *******************************************************************************/
 #include <linux/module.h>
 #include <linux/init.h>
 #include <linux/slab.h>
@@ -699,7 +699,7 @@ static int __init etx_driver_init(void)
 {
   int ret = -1;
   /*Allocating Major number*/
-  if ((alloc_chrdev_region(&dev, 0, 1, "cap1188_dev")) < 0)
+  if ((alloc_chrdev_region(&dev, 0, 1, "ssd1306_dev")) < 0)
   {
     pr_err("Cannot allocate major number\n");
     return -1;
@@ -715,7 +715,7 @@ static int __init etx_driver_init(void)
   }
 
   /*Creating struct class*/
-  if ((dev_class = class_create(THIS_MODULE, "class_1188")) == NULL)
+  if ((dev_class = class_create(THIS_MODULE, "class_ssd1306")) == NULL)
   {
     pr_err("Cannot create the struct class\n");
     return -1;
@@ -753,6 +753,10 @@ static void __exit etx_driver_exit(void)
 {
   i2c_unregister_device(etx_i2c_client_oled);
   i2c_del_driver(&etx_oled_driver);
+  device_destroy(dev_class, dev);
+  class_destroy(dev_class);
+  cdev_del(&etx_cdev);
+  unregister_chrdev_region(dev, 1);
   pr_info("Driver Removed!!!\n");
 }
 

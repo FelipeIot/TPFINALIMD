@@ -1,5 +1,5 @@
 
-obj-m += test.o
+obj-m += driver.o
 KDIR :=/home/felipe/os/buildroot-2024.02/output/build/linux-custom
 ARCH := arm64
 CROSS_COMPILE := aarch64-buildroot-linux-gnu-

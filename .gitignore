@@ -1,0 +1,13 @@
+/driver/.*
+/driver/driver.ko
+/driver/driver.mod*
+/driver/driver.o
+/driver/Module.*
+/driver/modules.*
+
+/picture/imd.mp4
+/user/shut
+
+
+
+

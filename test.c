@@ -1,13 +1,14 @@
-/***************************************************************************/ /**
-                                                                               *  \file       test.c
-                                                                               *
-                                                                               *  \details    SSD_1306 OLED Display I2C driver
-                                                                               *
-                                                                               *  \author     Felipe Sarche
-                                                                               *
-                                                                               *
-                                                                               *
-                                                                               * *******************************************************************************/
+/***************************************************************************/ 
+/**
+*  \file       test.c
+*
+*  \details    SSD_1306 OLED Display I2C driver
+*
+*  \author     Felipe Sarche
+*
+*
+*
+* *******************************************************************************/
 #include <linux/module.h>
 #include <linux/init.h>
 #include <linux/slab.h>
@@ -16,8 +17,10 @@
 #include <linux/kernel.h>
 #include <linux/cdev.h>
 
+#define DEVICENAME ("ssd1306") // Device
+
 #define I2C_BUS_AVAILABLE (1)         // I2C Bus available in our Raspberry Pi
-#define SLAVE_DEVICE_NAME ("mse,IMD") // Device and Driver Name
+#define SLAVE_DEVICE_NAME ("mse,IMD") // DDriver Name
 #define SSD1306_SLAVE_ADDR (0x3C)     // SSD1306 OLED Slave Address
 #define SSD1306_MAX_SEG (128)         // Maximum segment
 #define SSD1306_MAX_LINE (7)          // Maximum line
@@ -185,35 +188,13 @@ static struct file_operations fops =
         .release = etx_release,
 };
 
-
 static ssize_t etx_read(struct file *filp,
                         char __user *buf, size_t count, loff_t *off)
 {
   /*
   ** This function will be called when we read the Device file
   */
-  // char str[5];
-  // uint8_t sensor_data = 0x00;
-  // uint8_t lectura_reg= 0x03;
-  // size_t datalen = 0;
-  // if(*off == 0){
-  //     CAP1188_write(0x00,0x01); //sensitivity control
-  //     CAP1188_write(0x00,0x00);
-  //     I2C_write(&lectura_reg, 1);
-  //     I2C_read(&sensor_data, 1);
-  //     sprintf(str, "%d\n", sensor_data);
-  //     datalen = strlen(str);
-  //     if (count > datalen) {
-  //         count = datalen;
-  //     }
-  //     if (copy_to_user(buf, str, count)) {
-  //         return -EFAULT;
-  //     }
-  //     pr_info("Driver Read Function Called...!!!\n");
-  //     pr_info("Driver Read Data %d ...!!!\n",sensor_data);
-  //     *off += count;
-  //     return count;
-  // }
+
   return 0;
 }
 static int etx_open(struct inode *inode, struct file *file)
@@ -239,6 +220,26 @@ static ssize_t etx_write(struct file *filp,
   /*
   ** This function will be called when we write the Device file
   */
+
+  char kernel_buf[21] = {0};
+  int ret = 0;
+
+  ret = copy_from_user(kernel_buf, buf, len);
+
+  if (IS_ERR(&ret))
+  {
+    pr_info("Error with copy_from_user with error = %d", ret);
+    return ret;
+  }
+  else
+  {
+    pr_info("Contents of buf:\n");
+    for (int i = 0; i < len; i++)
+    {
+      pr_info("buf[%d] = %d\n", i, buf[i]);
+    }
+  }
+  SSD1306_Write(true, buf[0]);
   pr_info("Writting device file...!!!\n");
   return 0;
 }
@@ -721,7 +722,7 @@ static int __init etx_driver_init(void)
   }
 
   /*Creating device*/
-  if ((device_create(dev_class, NULL, dev, NULL, "ssd1306")) == NULL)
+  if ((device_create(dev_class, NULL, dev, NULL, DEVICENAME)) == NULL)
   {
     pr_err("Cannot create the Device \n");
     return -1;

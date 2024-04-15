@@ -41,6 +41,9 @@ __used __section("__versions") = {
 	{ 0x74291057, "i2c_put_adapter" },
 	{ 0x742ca250, "i2c_unregister_device" },
 	{ 0xabf366e5, "i2c_del_driver" },
+	{ 0x12a4e128, "__arch_copy_from_user" },
+	{ 0xdcb764ad, "memset" },
+	{ 0x7682ba4e, "__copy_overflow" },
 	{ 0x12f15cdb, "i2c_transfer_buffer_flags" },
 	{ 0x8da6585d, "__stack_chk_fail" },
 	{ 0xf9a482f9, "msleep" },
@@ -51,4 +54,4 @@ MODULE_INFO(depends, "");
 
 MODULE_ALIAS("i2c:mse,IMD");
 
-MODULE_INFO(srcversion, "5C25EAD10C36A241DD1257E");
+MODULE_INFO(srcversion, "8582B5141E9DDB1D6F376EA");
